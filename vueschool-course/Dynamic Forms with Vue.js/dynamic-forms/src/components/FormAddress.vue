@@ -51,13 +51,14 @@
     },
     methods: {
       submit() {
-        if (!this.$v.$invalid) {
-          this.$emit('update', {
+        this.$emit('update', {
+          data: {
             recipient: this.form.recipient,
             address: this.form.address
-          })
+          },
+          valid: !this.$v.$invalid
+        })
         }
-      }
     }
   }
 </script>

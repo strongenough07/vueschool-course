@@ -74,7 +74,11 @@
         this.selectedPlan = plan
 
         this.$emit('update', {
-          plan: this.selectedPlan
+          data: {
+
+            plan: this.selectedPlan
+          },
+          valid: !this.$v.$invalid
         })
       }
     }

@@ -1,6 +1,9 @@
 <template>
   <div>
+    <keep-alive>
+
     <component :is="currentStep" @update="processStep" :wizard-data="form"></component>
+    </keep-alive>
    
 
     <div class="progress-bar">
@@ -54,7 +57,7 @@ export default {
         email: null,
         name: null,
         password: null,
-        address: null,
+        address: null, 
         recipient: null,
         chocolate: false,
         otherTreat: false
@@ -73,12 +76,14 @@ export default {
     }
   },
   methods: {
-    processStep (stepData) {
-      Object.assign(this.form, stepData)
-      this.canGoNext = true 
+    processStep (step) {
+      Object.assign(this.form, step.data)
+      this.canGoNext = step.valid
     },
     goBack () {
       this.currentStepNumber--
+      this.canGoNext = true 
+
     },
     goNext () {
       this.currentStepNumber++
