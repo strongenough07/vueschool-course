@@ -72,8 +72,10 @@
     methods: {
       pickPlan (plan) {
         this.selectedPlan = plan
-
-        this.$emit('update', {
+        this.sumbit()
+      },
+      sumbit() {
+           this.$emit('update', {
           data: {
 
             plan: this.selectedPlan
