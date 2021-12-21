@@ -2,8 +2,11 @@
   <div id="app">
     <h1>User Card</h1>
     <div class="center">
-      <!-- .card End -->
-      <UserCard :user="user" />
+      <UserCard
+        :user="user"
+        @click.native="nameAlert(user.name)"
+        @contact="contactUser(user.name)"
+      />
     </div>
   </div>
 </template>
@@ -21,6 +24,14 @@ export default {
         bio: "Candy canes sweet roll pudding liquorice jelly beans brownie powder pie. Pudding powder marshmallow sugar plum dessert pastry jelly-o pastry marzipan. Jelly topping biscuit jelly beans cookie cheesecake.",
       },
     };
+  },
+  methods: {
+    nameAlert(name) {
+      alert(`Clicked on ${name}`);
+    },
+    contactUser(name) {
+      alert(`Contacting ${name}`);
+    },
   },
   components: {
     UserCard,
