@@ -1,38 +1,29 @@
 <template>
   <div id="app">
-    <h1>Vue App</h1>
-    <ul>
-      <Asteroid
-        v-for="asteroid in asteroids"
-        :key="asteroid.id"
-        :data="asteroid"
-      />
-    </ul>
+    <h1>User Card</h1>
+    <div class="center">
+      <!-- .card End -->
+      <UserCard :user="user" />
+    </div>
   </div>
 </template>
 
 <script>
-  const asteroids = require('./asteroids.json'); // 1K Items
-  import Asteroid from './components/asteroid-functional';
-  export default {
-    name: 'App',
-
-    data() {
-      return {
-        asteroids,
-      };
-    },
-
-    components: {
-      Asteroid,
-    },
-
-    created() {
-      console.time('rendering');
-    },
-
-    mounted() {
-      console.timeEnd('rendering');
-    },
-  };
+import UserCard from "./components/user-card";
+export default {
+  name: "App",
+  data() {
+    return {
+      user: {
+        name: "Jane Doe",
+        role: "Staff Engineer",
+        avatar: "https://randomuser.me/api/portraits/women/26.jpg",
+        bio: "Candy canes sweet roll pudding liquorice jelly beans brownie powder pie. Pudding powder marshmallow sugar plum dessert pastry jelly-o pastry marzipan. Jelly topping biscuit jelly beans cookie cheesecake.",
+      },
+    };
+  },
+  components: {
+    UserCard,
+  },
+};
 </script>
