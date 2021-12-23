@@ -12,7 +12,7 @@
           />
           <div>
             <div>{{ item.name.first }}</div>
-            <slot name="secondrow" :item="item"></slot>
+            <slot name="secondrow" :item="item" :remove="remove"></slot>
           </div>
         </div>
       </li>
@@ -59,6 +59,12 @@ export default {
         this.error = error;
         return error;
       }
+    },
+    remove(item) {
+      console.log("test");
+      this.data.results = this.data.results.filter(
+        (entry) => entry.email !== item.email
+      );
     },
   },
 };
