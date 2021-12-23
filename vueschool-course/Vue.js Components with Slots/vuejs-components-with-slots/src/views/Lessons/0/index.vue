@@ -1,8 +1,7 @@
 <template>
   <div>
-    <AppButton>press me</AppButton>
-    <AppButton>like me</AppButton>
-    <AppButton>buy me</AppButton>
+    <h1>dsadsa</h1>
+    <AppButton text="press me"></AppButton>
   </div>
 </template>
 
