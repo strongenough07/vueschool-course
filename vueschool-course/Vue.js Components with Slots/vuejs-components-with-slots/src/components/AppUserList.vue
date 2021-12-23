@@ -1,26 +1,36 @@
 <template>
   <section>
     <slot name="title">Users</slot>
-    <ul class="userlist" v-if="state === 'loaded'">
-      <li v-for="item in data.results" :key="item.email">
-        <div>
-          <img
-            width="48"
-            height="48"
-            :src="item.picture.large"
-            :alt="item.name.first + ' ' + item.name.last"
-          />
-          <div>
-            <div>{{ item.name.first }}</div>
-            <slot name="secondrow" :item="item" :remove="remove"></slot>
-          </div>
-        </div>
-      </li>
-    </ul>
-    <slot v-if="state === 'loading'" name="loading"> loading... </slot>
-    <slot v-if="state === 'failed'" name="error"
-      >Oops, something went wrong.</slot
+    <slot
+      name="userlist"
+      :count="data.results.length"
+      :list="data.results"
+      :remove="remove"
+      v-if="state === 'loaded'"
     >
+      <ul class="userlist">
+        <li v-for="item in data.results" :key="item.email">
+          <slot name="listitem" :user="item">
+            <div>
+              <img
+                width="48"
+                height="48"
+                :src="item.picture.large"
+                :alt="item.name.first + ' ' + item.name.last"
+              />
+              <div>
+                <div>{{ item.name.first }}</div>
+                <slot name="secondrow" :item="item"></slot>
+              </div>
+            </div>
+          </slot>
+        </li>
+      </ul>
+    </slot>
+    <slot v-else name="loading"> loading... </slot>
+    <slot v-if="state === 'failed'" name="error">
+      Oops, something went wrong.
+    </slot>
   </section>
 </template>
 
@@ -32,6 +42,12 @@ const states = {
   failed: "failed",
 };
 export default {
+  props: {
+    secondrow: {
+      type: Function,
+      default: () => {},
+    },
+  },
   data() {
     return {
       state: "idle",
@@ -49,11 +65,13 @@ export default {
       this.error = undefined;
       this.data = undefined;
       try {
-        const response = await fetch("https://randomuser.me/api/?results=5");
-        const json = await response.json();
-        this.state = "loaded";
-        this.data = json;
-        return response;
+        setTimeout(async () => {
+          const response = await fetch("https://randomuser.me/api/?results=5");
+          const json = await response.json();
+          this.state = "loaded";
+          this.data = json;
+          return response;
+        }, 1000);
       } catch (error) {
         this.state = "failed";
         this.error = error;
@@ -61,7 +79,6 @@ export default {
       }
     },
     remove(item) {
-      console.log("test");
       this.data.results = this.data.results.filter(
         (entry) => entry.email !== item.email
       );
@@ -70,7 +87,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .userlist {
   margin: 10px;
 }
