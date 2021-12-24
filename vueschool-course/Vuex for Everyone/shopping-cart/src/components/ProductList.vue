@@ -10,16 +10,17 @@
 </template>
 
 <script>
+import store from "../store/index";
 import shop from "../api/shop";
 export default {
-  data() {
-    return {
-      products: [],
-    };
+  computed: {
+    products() {
+      return store.getters.availableProducts;
+    },
   },
   created() {
     shop.getProducts((products) => {
-      this.products = products;
+      store.commit("setProducts", products);
     });
   },
 };
